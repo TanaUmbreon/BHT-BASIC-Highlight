@@ -12,6 +12,6 @@ Visual Studio Code でシンタックス ハイライトの拡張機能を自作
 
 以下のサイトを参考。
 
-* (Visual Studio CodeやAtomのシンタックスハイライト拡張機能を作る)[http://qiita.com/Maxfield_Walker/items/51af2984b7a628c41a94]: ハイライト構文の書き方を解説
-* (TextMate Manual » Language Grammars)[https://manual.macromates.com/en/language_grammars]: ハイライト構文の公式ドキュメント (英語)
+* [Visual Studio CodeやAtomのシンタックスハイライト拡張機能を作る](http://qiita.com/Maxfield_Walker/items/51af2984b7a628c41a94): ハイライト構文の書き方を解説
+* [TextMate Manual » Language Grammars](https://manual.macromates.com/en/language_grammars): ハイライト構文の公式ドキュメント (英語)
 
