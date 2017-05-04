@@ -2,58 +2,137 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "BHT-BASIC",
 	"patterns": [
-		{ "include": "#label"},
 		{ "include": "#user-defined-functions" },
 		{ "include": "#nested-blocks" },
-		{ "include": "#keywords" },
-		{ "include": "#strings" },
-		{ "include": "#comments" }
+		{ "include": "#statements" }
 	],
 	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"comment": "ステートメント",
+					"name": "keyword.bhtbasic",
+					"match": "\\b(?i:APLOAD|BEEP|CLFILE|CLOSE|CLS|COMMON|CONST|CURSOR|DATA|DECLARE|DEFREG|DIM|ERASE|FIELD|GET|GLOBAL|INPUT|KEY|KILL|KPLOAD|LET|LINE\\s+INPUT|LOCATE|ON\\s+ERROR\\s+GOTO|OPEN|OUT|POWER|PRINT|PRINT\\s+USING|PRIVATE|PUBLIC|PUT|READ|REM|RESTORE|SCREEN|STATIC|WAIT|XFILE)\\b"
+				},
+				{
+					"comment": "フロー制御ステートメント",
+					"name": "keyword.control.bhtbasic",
+					"match": "\\b(?i:CALL|CHAIN|GOSUB|GOTO|RESUME|RETURN|END(?!\\s+(?i:DEF|FUNCTION|IF|SELECT|SUB)))\\b"
+				}
+			]
+		},
+		"strings": {
+			"comment": "文字列",
+			"name": "string.quoted.double.bhtbasic",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": []
+		},
+		"comments": {
+			"patterns": [
+				{
+					"comment": "行コメント",
+					"name": "comment.line.single-quote.bhtbasic",
+					"match": "'.*"
+				}
+			]
+		},
 		"label": {
 			"patterns": [
 				{
-					"match": "^(?i:FN[A-Z0-9.]*:)",
+					"comment": "ラベルの構文エラー (ラベルの先頭に FN を付けないでください)",
 					"name":"invalid.illegal.bhtbasic",
-					"comment": "構文エラー (ラベルの先頭に FN を付けないでください)"
+					"match": "^(?i:FN[A-Z0-9.]*:)"
 				},
 				{
-					"match": "^(?i:0:)",
+					"comment": "ラベルの構文エラー (0 は特別な意味を持つため、使用しないでください)",
 					"name":"invalid.illegal.bhtbasic",
-					"comment": "構文エラー (0 は特別な意味を持つため、使用しないでください)"
+					"match": "^(?i:0:)"
 				},
 				{
-					"match": "^(?i:[A-Z0-9.]+:)",
+					"comment": "ラベル",
 					"name":"entity.name.section.bhtbasic",
-					"comment": "ラベル"
+					"match": "^(?i:[A-Z0-9.]+:)"
 				}
+			]
+		},
+		"statements": {
+			"patterns": [
+				{ "include": "#keywords" },
+				{ "include": "#strings" },
+				{ "include": "#comments" },
+				{ "include": "#label"}
 			]
 		},
 		"user-defined-functions": {
 			"patterns": [
 				{
-					"begin": "\\b(?i:(SUB) +([A-Z0-9]+)( *\\((BYREF|BYVAL)?\\))?)\\b",
+					"comment": "ユーザ定義関数 (SUB ... END SUB)",
+					"name": "meta.function.bhtbasic",
+					"begin": "\\b(?i:(SUB)\\s+([A-Z0-9.]+))\\b",
 					"beginCaptures": {
 						"1": { "name": "keyword.bhtbasic" },
 						"2": { "name": "entity.name.function.bhtbasic" }
 					},
-					"end": "\\b(?i:END +SUB)\\b",
+					"end": "\\b(?i:END\\s+SUB)\\b",
 					"endCaptures": {
 						"0": { "name": "keyword.bhtbasic" }
 					},
 					"patterns": [
 						{ "include": "#nested-blocks" },
-						{ "include": "#keywords" },
-						{ "include": "#strings" },
-						{ "include": "#comments" }
-					],
-					"comment": "ユーザ定義関数 (SUB ... END SUB)"
+						{ "include": "#statements" }
+					]
+				},
+				{
+					"comment": "ユーザ定義関数 (FUNCTION ... END FUNCTION)",
+					"name": "meta.function.bhtbasic",
+					"begin": "\\b(?i:(FUNCTION)\\s+([A-Z0-9.]+[%&$]?))",
+					"beginCaptures": {
+						"1": { "name": "keyword.bhtbasic" },
+						"2": { "name": "entity.name.function.bhtbasic" }
+					},
+					"end": "\\b(?i:END\\s+FUNCTION)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#statements" }
+					]
+				},
+				{
+					"comment": "ユーザ定義関数 (DEF FN ... END DEF)",
+					"name": "meta.function.bhtbasic",
+					"begin": "\\b(?i:(DEF)\\s+(FN[A-Z0-9.]+[%&$]?)(?!.*=))",
+					"beginCaptures": {
+						"1": { "name": "keyword.bhtbasic" },
+						"2": { "name": "entity.name.function.bhtbasic" }
+					},
+					"end": "\\b(?i:END\\s+DEF)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#statements" }
+					]
+				},
+				{
+					"comment": "ユーザ定義関数 (DEF FN 一行形)",
+					"name": "meta.function.bhtbasic",
+					"match": "\\b(?i:(DEF)\\s+(FN[A-Z0-9.]+[%&$]?)(?=.*=))",
+					"captures": {
+						"1": { "name": "keyword.bhtbasic" },
+						"2": { "name": "entity.name.function.bhtbasic" }
+					}
 				}
 			]
 		},
 		"nested-blocks" : {
 			"patterns": [
 				{
+					"comment": "ステートメント ブロック (FOR ... NEXT)",
+					"name": "meta.block.bhtbasic",
 					"begin": "\\b(?i:FOR)\\b",
 					"beginCaptures": {
 						"0": { "name": "keyword.control.bhtbasic" }
@@ -64,13 +143,59 @@
 					},
 					"patterns": [
 						{ "include": "#nested-blocks" },
-						{ "include": "#keywords" },
-						{ "include": "#strings" },
-						{ "include": "#comments" }
-					],
-					"comment": "ステートメント (FOR ... NEXT)"
+						{ "include": "#statements" },
+						{
+							"comment": "フロー制御ステートメント (FOR ... NEXT)",
+							"name": "keyword.control.bhtbasic",
+							"match": "\\b(?i:TO|STEP)\\b"
+						}
+					]
 				},
 				{
+					"comment": "ステートメント ブロック (IF ... THEN ... ELSE ... END IF)",
+					"name": "meta.block.bhtbasic",
+					"begin": "\\b(?i:IF)\\b",
+					"beginCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"end": "\\b(?i:END\\s*IF)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#statements" },
+						{
+							"comment": "フロー制御ステートメント (IF ... THEN ... ELSE ... END IF)",
+							"name": "keyword.control.bhtbasic",
+							"match": "\\b(?i:THEN|ELSE)\\b"
+						}
+					]
+				},
+				{
+					"comment": "ステートメント ブロック (SELECT ... CASE ... END SELECT)",
+					"name": "meta.block.bhtbasic",
+					"begin": "\\b(?i:SELECT)\\b",
+					"beginCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"end": "\\b(?i:END\\s*SELECT)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#statements" },
+						{
+							"comment": "フロー制御ステートメント (SELECT ... CASE ... END SELECT)",
+							"name": "keyword.control.bhtbasic",
+							"match": "\\b(?i:CASE(\\s+ELSE)?)\\b"
+						}
+					]
+				},
+				{
+					"comment": "ステートメント ブロック (WHILE ... WEND)",
+					"name": "meta.block.bhtbasic",
 					"begin": "\\b(?i:WHILE)\\b",
 					"beginCaptures": {
 						"0": { "name": "keyword.control.bhtbasic" }
@@ -84,37 +209,7 @@
 						{ "include": "#keywords" },
 						{ "include": "#strings" },
 						{ "include": "#comments" }
-					],
-					"comment": "ステートメント (WHILE ... WEND)"
-				}
-			]
-		},
-		"keywords": {
-			"patterns": [
-				{
-					"name": "keyword.bhtbasic",
-					"match": "\\b(?i:DATA|RESTORE|DIM|PRIVATE|PUBLIC|CONST|CLS|SCREEN|LOCATE|PRINT)\\b",
-					"comment": "ステートメント"
-				},
-				{
-					"name": "keyword.control.bhtbasic",
-					"match": "\\b(?i:GOTO|RETURN|END(?! +(?i:IF|SUB|FUNCTION|DEF)))\\b",
-					"comment": "ステートメント (フロー制御)"
-				}
-			]
-		},
-		"strings": {
-			"name": "string.quoted.double.bhtbasic",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": []
-		},
-		"comments": {
-			"patterns": [
-				{
-					"name": "comment.line.single-quote.bhtbasic",
-					"match": "'.*",
-					"comment": "行コメント"
+					]
 				}
 			]
 		}
