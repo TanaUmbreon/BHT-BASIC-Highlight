@@ -1,65 +1,24 @@
-# bht-basic-highlight README
+# BHT-BASIC Highlight README
 
-This is the README for your extension "bht-basic-highlight". After writing up a brief description, we recommend including the following sections.
+## 概要
 
-## Features
+Visual Studio Code 上で BHT-BASIC のシンタックス ハイライトを行うための拡張機能です。
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
+> BHT-BASIC: (株)デンソーウェーブ社が開発した、同社の自動認識機器 (バーコード ハンディ ターミナル) を動かすためのプログラミング言語です。
 
 \!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## 拡張機能の設定
 
-## Requirements
+BHT-BASIC のソース コード (*.src) は文字エンコーディングに Shift-JIS を使用するため、 VS Code 上で開くと文字化けを起こす可能性があります。
+`[ファイル] > [基本設定] > [設定]` から、ファイルを開くときに文字エンコーディングを推測するように設定してください。
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+* `files.autoGuessEncoding`: `true` に設定してください。
 
-## Extension Settings
+## 既知の問題
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+特になし。
 
-For example:
+## リリース ノート
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+まだリリースされていません。
