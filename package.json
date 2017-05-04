@@ -1,0 +1,26 @@
+{
+    "name": "bht-basic-highlight",
+    "displayName": "BHT-BASIC Highlight",
+    "description": "BHT-BASIC highlight for Visual Studio Code",
+    "version": "0.0.1",
+    "publisher": "Tana",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "bhtbasic",
+            "aliases": ["BHT-BASIC", "bhtbasic"],
+            "extensions": [".src",".inc"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "bhtbasic",
+            "scopeName": "source.bhtbasic",
+            "path": "./syntaxes/bhtbasic.tmLanguage.json"
+        }]
+    }
+}

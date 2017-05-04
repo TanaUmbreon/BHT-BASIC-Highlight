@@ -1,0 +1,123 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "BHT-BASIC",
+	"patterns": [
+		{ "include": "#label"},
+		{ "include": "#user-defined-functions" },
+		{ "include": "#nested-blocks" },
+		{ "include": "#keywords" },
+		{ "include": "#strings" },
+		{ "include": "#comments" }
+	],
+	"repository": {
+		"label": {
+			"patterns": [
+				{
+					"match": "^(?i:FN[A-Z0-9.]*:)",
+					"name":"invalid.illegal.bhtbasic",
+					"comment": "構文エラー (ラベルの先頭に FN を付けないでください)"
+				},
+				{
+					"match": "^(?i:0:)",
+					"name":"invalid.illegal.bhtbasic",
+					"comment": "構文エラー (0 は特別な意味を持つため、使用しないでください)"
+				},
+				{
+					"match": "^(?i:[A-Z0-9.]+:)",
+					"name":"entity.name.section.bhtbasic",
+					"comment": "ラベル"
+				}
+			]
+		},
+		"user-defined-functions": {
+			"patterns": [
+				{
+					"begin": "\\b(?i:(SUB) +([A-Z0-9]+)( *\\((BYREF|BYVAL)?\\))?)\\b",
+					"beginCaptures": {
+						"1": { "name": "keyword.bhtbasic" },
+						"2": { "name": "entity.name.function.bhtbasic" }
+					},
+					"end": "\\b(?i:END +SUB)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#keywords" },
+						{ "include": "#strings" },
+						{ "include": "#comments" }
+					],
+					"comment": "ユーザ定義関数 (SUB ... END SUB)"
+				}
+			]
+		},
+		"nested-blocks" : {
+			"patterns": [
+				{
+					"begin": "\\b(?i:FOR)\\b",
+					"beginCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"end": "\\b(?i:NEXT)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#keywords" },
+						{ "include": "#strings" },
+						{ "include": "#comments" }
+					],
+					"comment": "ステートメント (FOR ... NEXT)"
+				},
+				{
+					"begin": "\\b(?i:WHILE)\\b",
+					"beginCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"end": "\\b(?i:WEND)\\b",
+					"endCaptures": {
+						"0": { "name": "keyword.control.bhtbasic" }
+					},
+					"patterns": [
+						{ "include": "#nested-blocks" },
+						{ "include": "#keywords" },
+						{ "include": "#strings" },
+						{ "include": "#comments" }
+					],
+					"comment": "ステートメント (WHILE ... WEND)"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.bhtbasic",
+					"match": "\\b(?i:DATA|RESTORE|DIM|PRIVATE|PUBLIC|CONST|CLS|SCREEN|LOCATE|PRINT)\\b",
+					"comment": "ステートメント"
+				},
+				{
+					"name": "keyword.control.bhtbasic",
+					"match": "\\b(?i:GOTO|RETURN|END(?! +(?i:IF|SUB|FUNCTION|DEF)))\\b",
+					"comment": "ステートメント (フロー制御)"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.bhtbasic",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": []
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.single-quote.bhtbasic",
+					"match": "'.*",
+					"comment": "行コメント"
+				}
+			]
+		}
+	},
+	"scopeName": "source.bhtbasic"
+}
