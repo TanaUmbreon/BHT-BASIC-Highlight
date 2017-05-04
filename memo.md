@@ -6,7 +6,7 @@ Visual Studio Code でシンタックス ハイライトの拡張機能を自作
 
 以下のサイトを参考にして、VS Codeでデバッグしながら作成できる環境を構築。
 
-* (Visual Studio Code でカスタム構文強調エクステンションを作る)[https://yogsite.herokuapp.com/programmings/1]: ひな形作成に必要なソフトのインストール手順など
+* [Visual Studio Code でカスタム構文強調エクステンションを作る](https://yogsite.herokuapp.com/programmings/1): ひな形作成に必要なソフトのインストール手順など
 
 ## ハイライト構文の記述方法
 
