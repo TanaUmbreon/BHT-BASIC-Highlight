@@ -17,7 +17,7 @@
 				{
 					"comment": "フロー制御ステートメント",
 					"name": "keyword.control.bhtbasic",
-					"match": "\\b(?i:CALL|CHAIN|GOSUB|GOTO|RESUME|RETURN|END(?!\\s+(?i:DEF|FUNCTION|IF|SELECT|SUB)))\\b"
+					"match": "\\b(?i:CALL|CHAIN|GOSUB|GOTO|RESUME|RETURN|END(?!\\s+(DEF|FUNCTION|IF|SELECT|SUB)))\\b"
 				}
 			]
 		},
