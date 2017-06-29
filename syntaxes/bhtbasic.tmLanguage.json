@@ -12,12 +12,26 @@
 				{
 					"comment": "ステートメント",
 					"name": "keyword.bhtbasic",
-					"match": "\\b(?i:APLOAD|BEEP|CLFILE|CLOSE|CLS|COMMON|CONST|CURSOR|DATA|DECLARE|DEFREG|DIM|ERASE|FIELD|GET|GLOBAL|INPUT|KEY|KILL|KPLOAD|LET|LINE\\s+INPUT|LOCATE|ON\\s+ERROR\\s+GOTO|OPEN|OUT|POWER|PRINT|PRINT\\s+USING|PRIVATE|PUBLIC|PUT|READ|REM|RESTORE|SCREEN|STATIC|WAIT|XFILE)\\b"
+					"match": "\\b(?i:APLOAD|BEEP|CLFILE|CLOSE|CLS|COMMON|CONST|CURSOR|DATA|DECLARE|DEFREG|DIM|ERASE|FIELD|GET|GLOBAL|INPUT|KEY|KILL|KPLOAD|LET|LINE\\s+INPUT|LOCATE|ON\\s+ERROR\\s+GOTO|OPEN|OUT|POWER|PRINT|PRINT\\s+USING|PRIVATE|PUBLIC|PUT|READ|REM|RESTORE|SCREEN|STATIC|WAIT|XFILE)(?!%)\\b"
 				},
 				{
 					"comment": "フロー制御ステートメント",
 					"name": "keyword.control.bhtbasic",
 					"match": "\\b(?i:CALL|CHAIN|GOSUB|GOTO|RESUME|RETURN|END(?!\\s+(DEF|FUNCTION|IF|SELECT|SUB)))\\b"
+				},
+				{
+					"comment": "演算子",
+					"name": "keyword.operator.bhtbasic",
+					"match": "\\b(?i:\\+|-|\\*|/|MOD)\\b"
+				}
+			]
+		},
+		"built-in-functions": {
+			"patterns": [
+				{
+					"comment": "関数",
+					"name": "support.function.bhtbasic",
+					"match": "\\b(?i:ABS|ASC|BCC$|CHKDGT$|CHR$|COUNTRY$|CSRLIN|DATE$|EOF|ERL|ERR|ETX$|FRE|HEX$|INKEY$|INP|INPUT$|INSTR|INT|LEFT$|LEN|LOC|LOF|MARK\\$|MID\\$|POS|RIGHT\\$|SEARCH|SOH\\$|STR\\$|STX\\$|TIME\\$|TIMEA|TIMEB|TIMEC|VAL)\\b"
 				}
 			]
 		},
@@ -40,18 +54,18 @@
 		"label": {
 			"patterns": [
 				{
-					"comment": "ラベルの構文エラー (ラベルの先頭に FN を付けないでください)",
-					"name":"invalid.illegal.bhtbasic",
+					"comment": "ラベルの構文エラー (ラベルの先頭に FN を付けることはできない)",
+					"name": "invalid.illegal.bhtbasic",
 					"match": "^(?i:FN[A-Z0-9.]*:)"
 				},
 				{
-					"comment": "ラベルの構文エラー (0 は特別な意味を持つため、使用しないでください)",
-					"name":"invalid.illegal.bhtbasic",
+					"comment": "ラベルの構文エラー (0 は特別な意味を持つため、使用できない)",
+					"name": "invalid.illegal.bhtbasic",
 					"match": "^(?i:0:)"
 				},
 				{
 					"comment": "ラベル",
-					"name":"entity.name.section.bhtbasic",
+					"name": "entity.name.section.bhtbasic",
 					"match": "^(?i:[A-Z0-9.]+:)"
 				}
 			]
@@ -61,7 +75,8 @@
 				{ "include": "#keywords" },
 				{ "include": "#strings" },
 				{ "include": "#comments" },
-				{ "include": "#label"}
+				{ "include": "#label" },
+				{ "include": "built-in-functions" }
 			]
 		},
 		"user-defined-functions": {
